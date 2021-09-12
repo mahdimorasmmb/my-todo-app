@@ -6,15 +6,25 @@ import { nanoid } from "nanoid";
 function App() {
   const [listTaske, setListTaske] = useState([]);
   const handleTaske = (newTaske) => {
-    setListTaske([
-      ...listTaske,
-      {
-        id: nanoid(),
-        text: newTaske,
-      },
-    ]);
+    if (newTaske) {
+      setListTaske([
+        ...listTaske,
+        {
+          id: nanoid(),
+          text: newTaske,
+          checked: false,
+        },
+      ]);
+    } else {
+      alert("Plese complet form");
+    }
   };
-  console.log(listTaske);
+  const handleDletedTaske = (id) => {
+    const newListTaske = listTaske.filter((taske) => {
+      return taske.id !== id;
+    });
+    setListTaske(newListTaske);
+  };
   return (
     <div className="page-content page-container" id="page-content">
       <div className="padding">
@@ -24,7 +34,10 @@ function App() {
               <div className="card-body">
                 <h4 className="card-title">Awesome Todo list</h4>
                 <Form handleTaske={handleTaske} />
-                <List />
+                <List
+                  listTaske={listTaske}
+                  handleDletedTaske={handleDletedTaske}
+                />
               </div>
             </div>
           </div>
