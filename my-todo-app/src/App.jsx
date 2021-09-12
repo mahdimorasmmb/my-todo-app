@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { nanoid } from "nanoid";
 
 function App() {
-  const [listTaske, setListTaske] = useState([]);
+  const [listTaske, setListTaske] = useState(
+    JSON.parse(localStorage.getItem("listTaske")) || []
+  );
+  useEffect(() => {
+    window.localStorage.setItem("listTaske", JSON.stringify([...listTaske]));
+  }, [listTaske]);
+
   const handleTaske = (newTaske) => {
     if (newTaske) {
       setListTaske([
@@ -19,11 +25,23 @@ function App() {
       alert("Plese complet form");
     }
   };
+
   const handleDletedTaske = (id) => {
     const newListTaske = listTaske.filter((taske) => {
       return taske.id !== id;
     });
     setListTaske(newListTaske);
+  };
+
+  const handleChecked = (id) => {
+    const newListTaske = listTaske.map((taske) => {
+      if (taske.id === id) {
+        return { ...taske, checked: !taske.checked };
+      }
+      return taske;
+    });
+    setListTaske(newListTaske);
+    console.log(newListTaske);
   };
   return (
     <div className="page-content page-container" id="page-content">
@@ -37,6 +55,7 @@ function App() {
                 <List
                   listTaske={listTaske}
                   handleDletedTaske={handleDletedTaske}
+                  handleChecked={handleChecked}
                 />
               </div>
             </div>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export const ListItem = ({ list, handleDletedTaske }) => {
+export const ListItem = ({ list, handleDletedTaske, handleChecked }) => {
   const [checkbox, setcheckbox] = useState(list.checked);
+
   return (
     <li className={checkbox ? "completed" : ""}>
       <div className="form-check">
@@ -12,6 +13,7 @@ export const ListItem = ({ list, handleDletedTaske }) => {
             checked={checkbox}
             onChange={(e) => {
               setcheckbox(e.target.checked);
+              handleChecked(list.id);
             }}
             className="checkbox"
             type="checkbox"
