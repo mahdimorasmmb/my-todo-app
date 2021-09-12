@@ -6,12 +6,12 @@ import { Login } from "./components/Login";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const users = [
+  const [users, setUser] = useState([
     {
       username: "mahdi",
       password: "1234",
     },
-  ];
+  ]);
   const [listTaske, setListTaske] = useState(
     JSON.parse(localStorage.getItem("listTaske")) || []
   );
@@ -57,7 +57,25 @@ function App() {
         console.log(user === item.username && pas === item.password);
         setIsLogin(true);
       } else {
-        alert("asteb");
+        alert("نام کاربری نامعتبر می باشد ");
+      }
+    });
+  };
+
+  const handleSignin = (user, pas) => {
+    users.map((item) => {
+      if (item.username !== user) {
+        setUser([
+          ...users,
+          {
+            username: user,
+            password: pas,
+          },
+        ]);
+        alert("کابر جدید ثبت شد ");
+        console.log(users);
+      } else {
+        alert("کاربری با این نامکاربری  وجود دارد ");
       }
     });
   };
@@ -80,7 +98,10 @@ function App() {
                     />
                   </>
                 ) : (
-                  <Login handleLogin={handleLogin} />
+                  <Login
+                    handleLogin={handleLogin}
+                    handleSignin={handleSignin}
+                  />
                 )}
               </div>
             </div>

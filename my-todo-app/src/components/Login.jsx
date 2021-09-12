@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-export const Login = ({ handleLogin }) => {
+export const Login = ({ handleLogin, handleSignin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
     <form
-      onSubmit={() => {
-        handleLogin(username, password);
-        setUsername("");
-        setPassword("");
+      onSubmit={(e) => {
+        e.preventDefault();
       }}
       className="add-items d-flex login"
     >
@@ -32,10 +30,20 @@ export const Login = ({ handleLogin }) => {
       />
 
       <button
-        type="submit"
+        onClick={() => {
+          handleLogin(username, password);
+        }}
         className="add btn btn-primary font-weight-bold todo-list-add-btn login-item"
       >
         Login
+      </button>
+      <button
+        onClick={() => {
+          handleSignin(username, password);
+        }}
+        className="add btn btn-primary font-weight-bold todo-list-add-btn login-item"
+      >
+        Sign in
       </button>
     </form>
   );
