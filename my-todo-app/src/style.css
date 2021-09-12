@@ -480,3 +480,11 @@ input[type="checkbox"] {
   .dropdown-item {
   display: flex !important;
 }
+
+.login {
+  flex-flow: column;
+}
+
+.login-item {
+  margin-bottom: 10px;
+}

@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { nanoid } from "nanoid";
+import { Login } from "./components/Login";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const users = [
+    {
+      username: "mahdi",
+      password: "1234",
+    },
+  ];
   const [listTaske, setListTaske] = useState(
     JSON.parse(localStorage.getItem("listTaske")) || []
   );
   useEffect(() => {
-    window.localStorage.setItem("listTaske", JSON.stringify([...listTaske]));
+    window.localStorage.setItem("listTaske", JSON.stringify(listTaske));
   }, [listTaske]);
 
   const handleTaske = (newTaske) => {
@@ -43,6 +51,17 @@ function App() {
     setListTaske(newListTaske);
     console.log(newListTaske);
   };
+  const handleLogin = (user, pas) => {
+    users.map((item) => {
+      if (user === item.username && pas === item.password) {
+        console.log(user === item.username && pas === item.password);
+        setIsLogin(true);
+      } else {
+        alert("asteb");
+      }
+    });
+  };
+
   return (
     <div className="page-content page-container" id="page-content">
       <div className="padding">
@@ -51,12 +70,18 @@ function App() {
             <div className="card px-3">
               <div className="card-body">
                 <h4 className="card-title">Awesome Todo list</h4>
-                <Form handleTaske={handleTaske} />
-                <List
-                  listTaske={listTaske}
-                  handleDletedTaske={handleDletedTaske}
-                  handleChecked={handleChecked}
-                />
+                {isLogin ? (
+                  <>
+                    <Form handleTaske={handleTaske} />
+                    <List
+                      listTaske={listTaske}
+                      handleDletedTaske={handleDletedTaske}
+                      handleChecked={handleChecked}
+                    />
+                  </>
+                ) : (
+                  <Login handleLogin={handleLogin} />
+                )}
               </div>
             </div>
           </div>
