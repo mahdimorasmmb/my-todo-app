@@ -3,9 +3,11 @@ import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { nanoid } from "nanoid";
 import { Login } from "./components/Login";
+import { Timeer } from "./components/Timeer";
+import { Ti } from "./components/Ti";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [users, setUser] = useState([
     {
       username: "mahdi",
@@ -19,7 +21,7 @@ function App() {
     window.localStorage.setItem("listTaske", JSON.stringify(listTaske));
   }, [listTaske]);
 
-  const handleTaske = (newTaske) => {
+  const handleTaske = (newTaske, date, time) => {
     if (newTaske) {
       setListTaske([
         ...listTaske,
@@ -27,8 +29,11 @@ function App() {
           id: nanoid(),
           text: newTaske,
           checked: false,
+          myDate: date,
+          myTime: time,
         },
       ]);
+      console.log(listTaske);
     } else {
       alert("Plese complet form");
     }
@@ -79,6 +84,11 @@ function App() {
       }
     });
   };
+
+  // setInterval(() => {
+  //   const time = new Date();
+  //   console.log(time.getTime());
+  // }, 1000);
 
   return (
     <div className="page-content page-container" id="page-content">
