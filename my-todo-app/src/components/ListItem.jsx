@@ -8,8 +8,6 @@ export const ListItem = ({ list, handleDletedTaske, handleChecked }) => {
     const date = list.myDate.split("-");
     const time = list.myTime.split(":");
     const inDate = new Date(date[0], date[1], date[2], time[0], time[1]);
-    console.log(inDate.getMinutes());
-    console.log(newTime.getMinutes());
     if (
       inDate.getFullYear() === newTime.getFullYear() &&
       inDate.getMonth() === newTime.getMonth() &&
@@ -18,8 +16,11 @@ export const ListItem = ({ list, handleDletedTaske, handleChecked }) => {
       inDate.getMinutes() === newTime.getMinutes()
     ) {
       alert("ok");
+      // setcheckbox(true);
+    } else {
+      console.log("mmb");
     }
-  }, 5000);
+  }, 10000);
   return (
     <li className={checkbox ? "completed" : ""}>
       <div className="form-check">
