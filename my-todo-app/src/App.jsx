@@ -3,8 +3,6 @@ import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { nanoid } from "nanoid";
 import { Login } from "./components/Login";
-import { Timeer } from "./components/Timeer";
-import { Ti } from "./components/Ti";
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,6 +12,7 @@ function App() {
       password: "1234",
     },
   ]);
+  let date = new Date();
   const [listTaske, setListTaske] = useState(
     JSON.parse(localStorage.getItem("listTaske")) || []
   );
@@ -84,11 +83,6 @@ function App() {
       }
     });
   };
-
-  // setInterval(() => {
-  //   const time = new Date();
-  //   console.log(time.getTime());
-  // }, 1000);
 
   return (
     <div className="page-content page-container" id="page-content">

@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 
 export const ListItem = ({ list, handleDletedTaske, handleChecked }) => {
   const [checkbox, setcheckbox] = useState(list.checked);
-  setInterval(() => {
+
+  const timer = setInterval(() => {
     let newTime = new Date();
     newTime.setMonth(newTime.getMonth() + 1);
+    newTime.setSeconds(0);
+    newTime.setMilliseconds(0);
     const date = list.myDate.split("-");
     const time = list.myTime.split(":");
     const inDate = new Date(date[0], date[1], date[2], time[0], time[1]);
-    if (
-      inDate.getFullYear() === newTime.getFullYear() &&
-      inDate.getMonth() === newTime.getMonth() &&
-      inDate.getDay() === newTime.getDay() &&
-      inDate.getHours() === newTime.getHours() &&
-      inDate.getMinutes() === newTime.getMinutes()
-    ) {
+
+    if (newTime.getTime() === inDate.getTime() && !checkbox) {
+      setcheckbox(true);
+      clearInterval(timer);
       alert("ok");
-      // setcheckbox(true);
     } else {
       console.log("mmb");
     }
-  }, 10000);
+  }, 5000);
+
   return (
     <li className={checkbox ? "completed" : ""}>
       <div className="form-check">
