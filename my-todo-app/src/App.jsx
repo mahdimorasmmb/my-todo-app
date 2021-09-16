@@ -30,6 +30,7 @@ function App() {
           checked: false,
           myDate: date,
           myTime: time,
+          isEdite: false,
         },
       ]);
       console.log(listTaske);
@@ -54,6 +55,25 @@ function App() {
     });
     setListTaske(newListTaske);
     console.log(newListTaske);
+  };
+
+  const handleEdite = (id) => {
+    const newListTaske = listTaske.map((taske) => {
+      if (taske.id === id) {
+        return { ...taske, isEdite: !taske.isEdite };
+      }
+      return taske;
+    });
+    setListTaske(newListTaske);
+  };
+  const edited = (id, value) => {
+    const newListTaske = listTaske.map((taske) => {
+      if (taske.id === id) {
+        return { ...taske, text: value };
+      }
+      return taske;
+    });
+    setListTaske(newListTaske);
   };
   const handleLogin = (user, pas) => {
     users.map((item) => {
@@ -84,6 +104,26 @@ function App() {
     });
   };
 
+  const mytime = (myDate, myTime, setcheckbox, checkbox) => {
+    const timer = setInterval(() => {
+      let newTime = new Date();
+      newTime.setMonth(newTime.getMonth() + 1);
+      newTime.setSeconds(0);
+      newTime.setMilliseconds(0);
+      const date = myDate.split("-");
+      const time = myTime.split(":");
+      const inDate = new Date(date[0], date[1], date[2], time[0], time[1]);
+
+      if (newTime.getTime() === inDate.getTime() && !checkbox) {
+        setcheckbox(true);
+        clearInterval(timer);
+        alert("ok");
+      } else {
+        console.log("mmb");
+      }
+    }, 5000);
+  };
+
   return (
     <div className="page-content page-container" id="page-content">
       <div className="padding">
@@ -96,6 +136,9 @@ function App() {
                   <>
                     <Form handleTaske={handleTaske} />
                     <List
+                      edited={edited}
+                      handleEdite={handleEdite}
+                      mytime={mytime}
                       listTaske={listTaske}
                       handleDletedTaske={handleDletedTaske}
                       handleChecked={handleChecked}
