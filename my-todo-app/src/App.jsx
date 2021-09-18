@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { nanoid } from "nanoid";
+import listTodoReducer from "./redocers/listTodoReducer";
 
 function App() {
-  const [listTaske, setListTaske] = useState(
+  const [listTaske, dispatch] = useReducer(
+    listTodoReducer,
     JSON.parse(localStorage.getItem("listTaske")) || []
   );
   useEffect(() => {
@@ -13,35 +15,27 @@ function App() {
 
   const handleTaske = (newTaske) => {
     if (newTaske) {
-      setListTaske([
-        ...listTaske,
-        {
-          id: nanoid(),
-          text: newTaske,
-          checked: false,
-        },
-      ]);
+      dispatch({
+        type: "add",
+        paylod: newTaske,
+      });
     } else {
       alert("Plese complet form");
     }
   };
 
   const handleDletedTaske = (id) => {
-    const newListTaske = listTaske.filter((taske) => {
-      return taske.id !== id;
+    dispatch({
+      type: "remove",
+      paylod: id,
     });
-    setListTaske(newListTaske);
   };
 
   const handleChecked = (id) => {
-    const newListTaske = listTaske.map((taske) => {
-      if (taske.id === id) {
-        return { ...taske, checked: !taske.checked };
-      }
-      return taske;
+    dispatch({
+      type: "cheked",
+      paylod: id,
     });
-    setListTaske(newListTaske);
-    console.log(newListTaske);
   };
   return (
     <div className="page-content page-container" id="page-content">

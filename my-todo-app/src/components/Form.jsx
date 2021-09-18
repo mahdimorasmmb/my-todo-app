@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
+import taskeReducer from "../redocers/taskeReducer";
 
 export const Form = ({ handleTaske }) => {
-  const [newTaske, setNewTaske] = useState("");
+  // const [newTaske, setNewTaske] = useState("");
+  const [task, dispatch] = useReducer(taskeReducer, "");
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleTaske(newTaske);
-        setNewTaske("");
+        handleTaske(task);
+        dispatch({ type: "add", payload: "" });
       }}
       className="add-items d-flex"
     >
       <input
-        value={newTaske}
+        value={task}
         type="text"
         className="form-control todo-list-input"
         placeholder="What do you need to do today?"
         onChange={(e) => {
-          setNewTaske(e.target.value);
+          dispatch({ type: "add", payload: e.target.value });
         }}
       />
       <button
