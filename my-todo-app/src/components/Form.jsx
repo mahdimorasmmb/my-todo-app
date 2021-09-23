@@ -1,9 +1,9 @@
-import React, { useReducer, useState } from "react";
-import taskeReducer from "../redocers/taskeReducer";
+import React, { useContext, useReducer, useState } from "react";
+import { Tskecontext } from "../context/tskecontext";
 
 export const Form = ({ handleTaske }) => {
   // const [newTaske, setNewTaske] = useState("");
-  const [task, dispatch] = useReducer(taskeReducer, "");
+  const { task, dispatch } = useContext(Tskecontext);
   return (
     <form
       onSubmit={(e) => {

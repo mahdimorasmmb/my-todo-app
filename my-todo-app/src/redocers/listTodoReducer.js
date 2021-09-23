@@ -11,11 +11,13 @@ export default function listTodoReducer(state, action) {
           checked: false,
         },
       ];
+
     case "remove":
       const removeNewListTaske = state.filter((taske) => {
         return taske.id !== action.paylod;
       });
       return removeNewListTaske;
+
     case "cheked":
       const chekedNewListTaske = state.map((taske) => {
         if (taske.id === action.paylod) {
